@@ -1,0 +1,10 @@
+.idea
+.tscache
+.tmp
+node_modules*
+build*
+.build*
+
+*.iml
+*.log
+*.tmp.txt

@@ -1,0 +1,9 @@
+{
+    "adapters": {
+        "default": {
+            "module": "sails-disk",
+            "schema": true,
+            "filePath": ".build/database.json"
+        }
+    }
+}

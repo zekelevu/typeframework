@@ -1,0 +1,63 @@
+{
+  "name": "typeframework",
+  "version": "0.1.0",
+  "description": "TypeFramework",
+  "author": "Zeke Kievel <zeke.levu@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "keywords": [
+    "typeframework",
+    "framework",
+    "mvc",
+    "rest",
+    "restful",
+    "router",
+    "app",
+    "api"
+  ],
+  "main": "./build/TypeFramework.js",
+  "bin": {
+    "tfw": "./bin/tfw.js"
+  },
+  "scripts": {
+    "prepublish": "grunt",
+    "start": "grunt",
+    "pretest": "grunt test",
+    "test": "mocha -R spec test/integration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zekelevu/typeframework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zekelevu/typeframework/issues"
+  },
+  "dependencies": {
+    "express": "^4.2.0",
+    "compression": "^1.0.2",
+    "body-parser": "^1.2.0",
+    "method-override": "^1.0.1",
+    "morgan": "^1.0.1",
+    "waterline": "~0.9.16",
+    "lodash": "^2.4.1",
+    "ejs": "^1.0.0",
+    "express-ejs-layouts": "^1.1.0",
+    "commander": "^2.2.0",
+    "grunt": "~0.4.1",
+    "grunt-init": "^0.3.2"
+  },
+  "devDependencies": {
+    "grunt-ts": "^1.11.2",
+    "grunt-file-append": "0.0.4",
+    "grunt-text-replace": "^0.3.11",
+    "time-grunt": "~0.1.1",
+    "load-grunt-tasks": "~0.2.0",
+    "sails-disk": "^0.9.3",
+    "jison": "^0.4.13",
+    "should": "^4.0.4",
+    "request": "~2.27.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}

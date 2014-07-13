@@ -1,0 +1,12 @@
+node_modules*
+jison/
+test/
+src/
+Gruntfile.js
+TypeFramework.ts
+.travis.yml
+*.iml
+*.log
+*.tmp.txt
+.idea
+.tscache
