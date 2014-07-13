@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "TypeFramework",
   "author": "Zeke Kievel <zeke.levu@gmail.com>",
-  "private": true,
   "license": "MIT",
   "keywords": [
     "typeframework",
