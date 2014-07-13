@@ -43,7 +43,8 @@
     "express-ejs-layouts": "^1.1.0",
     "commander": "^2.2.0",
     "grunt": "~0.4.1",
-    "grunt-init": "^0.3.2"
+    "grunt-init": "^0.3.2",
+    "typeframework-generate-app": "^0.0.0"
   },
   "devDependencies": {
     "grunt-ts": "^1.11.2",
