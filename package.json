@@ -1,6 +1,6 @@
 {
   "name": "typeframework",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "TypeFramework",
   "author": "Zeke Kievel <zeke.levu@gmail.com>",
   "license": "MIT",
@@ -15,9 +15,6 @@
     "api"
   ],
   "main": "./build/TypeFramework.js",
-  "bin": {
-    "tfw": "./bin/tfw.js"
-  },
   "scripts": {
     "prepublish": "npm test",
     "start": "grunt",
