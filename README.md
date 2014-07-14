@@ -7,7 +7,7 @@ TypeFramework is a MVC Web Framework that makes it easy to build enterprise-grad
 Install the latest stable release of TypeFramework
 
 ```sh
-$ sudo npm install -g typeframework
+$ sudo npm install -g typeframework-cli
 ```
 
 ## Create a New TypeFramework Project

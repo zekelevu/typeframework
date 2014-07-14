@@ -1,5 +1,4 @@
 node_modules*
-jison/
 test/
 src/
 Gruntfile.js

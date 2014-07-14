@@ -1,6 +1,6 @@
 {
   "name": "typeframework",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "TypeFramework",
   "author": "Zeke Kievel <zeke.levu@gmail.com>",
   "license": "MIT",
@@ -42,18 +42,16 @@
     "ejs": "^1.0.0",
     "express-ejs-layouts": "^1.1.0",
     "commander": "^2.2.0",
-    "grunt": "~0.4.1",
-    "grunt-init": "^0.3.2",
-    "typeframework-generate-app": "^0.0.0"
+    "jison": "^0.4.13"
   },
   "devDependencies": {
+    "grunt": "~0.4.1",
     "grunt-ts": "^1.11.2",
     "grunt-file-append": "0.0.4",
     "grunt-text-replace": "^0.3.11",
     "time-grunt": "~0.1.1",
     "load-grunt-tasks": "~0.2.0",
     "sails-disk": "^0.9.3",
-    "jison": "^0.4.13",
     "should": "^4.0.4",
     "request": "~2.27.0"
   },
