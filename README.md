@@ -2,6 +2,9 @@
 
 TypeFramework is a MVC Web Framework that makes it easy to build enterprise-grade [NodeJS](http://nodejs.org) apps using [TypeScript](http://www.typescriptlang.org).
 
+[![NPM version](https://badge.fury.io/js/typeframework.svg)](http://badge.fury.io/js/typeframework)
+[![Build Status](https://travis-ci.org/zekelevu/typeframework.svg?branch=master)](https://travis-ci.org/zekelevu/typeframework)
+
 ## Installation
 
 Install the latest stable release of TypeFramework
