@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+    - "0.10"
+
+# whitelisted branches
+branches:
+    only:
+        - master
+        - stable
+        - beta
