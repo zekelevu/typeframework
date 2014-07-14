@@ -9,3 +9,5 @@ branches:
         - master
         - stable
         - beta
+
+before_install: npm install -g grunt-cli
