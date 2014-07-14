@@ -19,7 +19,7 @@
     "tfw": "./bin/tfw.js"
   },
   "scripts": {
-    "prepublish": "grunt",
+    "prepublish": "npm test",
     "start": "grunt",
     "pretest": "grunt test",
     "test": "mocha -R spec test/integration"
