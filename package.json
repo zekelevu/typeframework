@@ -16,7 +16,7 @@
   ],
   "main": "./build/TypeFramework.js",
   "scripts": {
-    "prepublish": "npm test",
+    "prepublish": "npm prune",
     "start": "grunt",
     "pretest": "grunt test",
     "test": "mocha -R spec test/integration"
