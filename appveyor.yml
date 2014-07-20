@@ -8,7 +8,7 @@ init:
     - git config --global core.autocrlf input
 
 # Operating system (build VM template)
-os: Windows Server 2012
+os: Windows Server 2012 R2
 
 # whitelisted branches
 branches:
