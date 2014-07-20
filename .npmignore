@@ -4,6 +4,7 @@ src/
 Gruntfile.js
 TypeFramework.ts
 .travis.yml
+appveyor.yml
 *.iml
 *.log
 *.tmp.txt
