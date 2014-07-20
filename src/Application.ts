@@ -67,7 +67,7 @@ module TF {
 
             // add body parser middleware
             var bodyParser: any = require('body-parser');
-            this.express.use(bodyParser.urlencoded());
+            this.express.use(bodyParser.urlencoded({ extended: true }));
             this.express.use(bodyParser.json());
 
             // add ejs layout middleware

@@ -1824,7 +1824,7 @@ declare module EX {
      */
     function vhost(hostname: string, server: any): Handler;
 
-    function urlencoded(): any;
+    function urlencoded(options?: {}): any;
 
     function multipart(): any;
 
