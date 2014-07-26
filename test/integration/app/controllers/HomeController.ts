@@ -2,6 +2,26 @@
 
 class HomeController extends TF.Controller {
 
+    static configure() {
+        this.beforeAction((context: TF.ActionFilterContext) => {
+            if (context.request.param('filter') == 'filter1') context.response.send('filter1');
+            else context.next();
+        })
+        .includes('actionWithBeforeFilter1', 'actionWithAllBeforeFilters');
+
+        this.beforeAction((context: TF.ActionFilterContext) => {
+            if (context.request.param('filter') == 'filter2') context.response.send('filter2');
+            else context.next();
+        })
+        .includes('actionWithBeforeFilter2', 'actionWithAllBeforeFilters');
+
+        this.beforeAction((context: TF.ActionFilterContext) => {
+            if (context.request.param('filter') == 'filter3') context.response.send('filter3');
+            else context.next();
+        })
+        .excludes('actionWithBeforeFilter1', 'actionWithBeforeFilter2', 'actionWithoutBeforeFilters');
+    }
+
     index() {
         this.response.send('home');
     }
@@ -65,20 +85,5 @@ class HomeController extends TF.Controller {
     static staticFunction() {}
 
 }
-
-HomeController.beforeAction((context: TF.ActionFilterContext) => {
-    if (context.request.param('filter') == 'filter1') context.response.send('filter1');
-    else context.next();
-}).includes('actionWithBeforeFilter1', 'actionWithAllBeforeFilters');
-
-HomeController.beforeAction((context: TF.ActionFilterContext) => {
-    if (context.request.param('filter') == 'filter2') context.response.send('filter2');
-    else context.next();
-}).includes('actionWithBeforeFilter2', 'actionWithAllBeforeFilters');
-
-HomeController.beforeAction((context: TF.ActionFilterContext) => {
-    if (context.request.param('filter') == 'filter3') context.response.send('filter3');
-    else context.next();
-}).excludes('actionWithBeforeFilter1', 'actionWithBeforeFilter2', 'actionWithoutBeforeFilters');
 
 app.addController(HomeController);

@@ -31,6 +31,9 @@ module TF {
         }
 
         public addController(controller: any) {
+            if (controller.hasOwnProperty('configure'))
+                controller.configure();
+
             var info = new ControllerInfo(controller, this.declaration);
             this.controllers.push(info);
         }
