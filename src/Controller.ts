@@ -52,6 +52,11 @@ module TF {
         }
 
         static beforeAction(action: (context: ActionFilterContext) => any, ...ignores: string[]): ActionFilter {
+            deprecate('Controller.beforeAction: Use Controller.addFilter instead');
+            return this.addFilter(action);
+        }
+
+        static addFilter(action: (context: ActionFilterContext) => any, ...ignores: string[]): ActionFilter {
             var filter = new ActionFilter(action);
             this.filters = this.filters || [];
             this.filters.push(filter);

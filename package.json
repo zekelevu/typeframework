@@ -39,7 +39,8 @@
     "ejs": "^1.0.0",
     "express-ejs-layouts": "^1.1.0",
     "commander": "^2.2.0",
-    "jison": "^0.4.13"
+    "jison": "^0.4.13",
+    "depd": "^0.4.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

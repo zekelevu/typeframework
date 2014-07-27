@@ -3,19 +3,19 @@
 class HomeController extends TF.Controller {
 
     static configure() {
-        this.beforeAction((context: TF.ActionFilterContext) => {
+        this.addFilter((context: TF.ActionFilterContext) => {
             if (context.request.param('filter') == 'filter1') context.response.send('filter1');
             else context.next();
         })
         .includes('actionWithBeforeFilter1', 'actionWithAllBeforeFilters');
 
-        this.beforeAction((context: TF.ActionFilterContext) => {
+        this.addFilter((context: TF.ActionFilterContext) => {
             if (context.request.param('filter') == 'filter2') context.response.send('filter2');
             else context.next();
         })
         .includes('actionWithBeforeFilter2', 'actionWithAllBeforeFilters');
 
-        this.beforeAction((context: TF.ActionFilterContext) => {
+        this.addFilter((context: TF.ActionFilterContext) => {
             if (context.request.param('filter') == 'filter3') context.response.send('filter3');
             else context.next();
         })
