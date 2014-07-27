@@ -204,7 +204,7 @@ describe('Test App', function() {
             request({ url: root + 'user/1', method: 'DELETE', json: true }, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
-                body.should.containEql({ 'ok': true });
+                body.should.containEql({ 'id': 1 });
                 done();
             })
         });
