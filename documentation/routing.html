@@ -1,0 +1,7 @@
+---
+layout: default
+title: documentation
+---
+
+{% capture content %}{% include documentation.routing.md %}{% endcapture %}
+{{ content | markdownify }}
