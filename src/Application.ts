@@ -248,7 +248,7 @@ module TF {
                 // generate action filter chain
                 action = _.reduceRight(controllerInfo.type.filters || [], (next, filter: ActionFilter) => {
                     if (!filter.contains(actionName)) return next;
-                    return function() { filter.action.call(controllerInfo.type, { request: req, response: res, next: next }) };
+                    return function() { filter.before.call(controllerInfo.type, { request: req, response: res, next: next }) };
                 }, action);
 
                 action();

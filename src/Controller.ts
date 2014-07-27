@@ -11,13 +11,11 @@ module TF {
     }
 
     export class ActionFilter {
-        private includeList: string[];
-        private excludeList: string[];
+        // executed before action executed
+        before: (context: ActionFilterContext) => any;
 
-        constructor(public action: (context: ActionFilterContext) => any) {
-            this.includeList = [];
-            this.excludeList = [];
-        }
+        private includeList: string[] = [];
+        private excludeList: string[] = [];
 
         contains(action: string) {
             if (this.includeList.length > 0 && this.excludeList.length > 0)
@@ -57,7 +55,8 @@ module TF {
         }
 
         static addFilter(action: (context: ActionFilterContext) => any, ...ignores: string[]): ActionFilter {
-            var filter = new ActionFilter(action);
+            var filter = new ActionFilter();
+            filter.before = action;
             this.filters = this.filters || [];
             this.filters.push(filter);
             return filter;
