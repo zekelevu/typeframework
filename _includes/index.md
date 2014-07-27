@@ -8,6 +8,8 @@ Install the latest stable release of TypeFramework:
 
     $ sudo npm install -g typeframework-cli
 
+Note: Don't use `sudo` if you're using Windows
+
 ## Create a New Project
 
 Creating a new application is easy, TypeFramework comes with a number of generators that will help you creating everything necessary so you can start working on your project.
@@ -20,6 +22,8 @@ Switch to your new app's folder and run your app:
 
     $ cd testProject
     $ tfw start
+
+And Voilà, your application has started. Visit [http://localhost:3000](http://localhost:3000) and you should see the default homepage.
 
 ## View Live Examples
 
