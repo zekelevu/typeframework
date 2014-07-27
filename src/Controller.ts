@@ -115,7 +115,7 @@ module TF {
                     this.response.send(404, { error: 'not found' });
                     return;
                 }
-                model.destroy((err) => this.response.send({ ok: true }));
+                model.destroy((err) => this.response.send(model));
             });
         }
 
