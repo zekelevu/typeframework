@@ -22,6 +22,7 @@
 'class'                                 return 'CLASS'
 'interface'                             return 'CLASS'
 'extends'                               return 'EXTENDS'
+'implements'                            return 'IMPLEMENTS'
 'static'                                return 'KEYWORD'
 'public'                                return 'KEYWORD'
 'private'                               return 'KEYWORD'
@@ -68,6 +69,10 @@ Class
         {$$ = { type: $1, name: $2, members: $3 }}
     | CLASS Identifier EXTENDS TypeList Block
         {$$ = { type: $1, name: $2, extends: $4, members: $5 }}
+    | CLASS Identifier IMPLEMENTS TypeList Block
+        {$$ = { type: $1, name: $2, implements: $4, members: $5 }}
+    | CLASS Identifier EXTENDS TypeList IMPLEMENTS TypeList Block
+        {$$ = { type: $1, name: $2, extends: $4, implements: $5, members: $6 }}
     ;
 Line
     : Variable
