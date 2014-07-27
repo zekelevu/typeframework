@@ -2,22 +2,22 @@
 
 module TF {
     export class Application {
-        private express: EX.Application;
-        private models: ModelInfo[];
-        private controllers: ControllerInfo[];
-        private declaration: Declaration;
+        config: Configuration;
+        router: Router;
+        root: string;
 
-        public config: Configuration;
-        public router: Router;
-        public root: string;
+        private express: EX.Application;
+        private models: ModelInfo[] = [];
+        private controllers: ControllerInfo[] = [];
+        private declaration: Declaration;
 
         constructor(root: string, declarationPath: string) {
             this.root = root;
             this.config = new Configuration();
-            this.models = [];
-            this.controllers = [];
             this.router = new Router();
             this.declaration = new Declaration(declarationPath);
+            this.models = [];
+            this.controllers = [];
 
             // default settings
             this.config.set('env', !process.env.NODE_ENV ? 'development' : process.env.NODE_ENV);
