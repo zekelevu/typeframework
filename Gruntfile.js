@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         ts: {
             build: {
-                src: ["TypeFramework.ts"],
+                src: ["src/TypeFramework.ts"],
                 out: "build/TypeFramework.js",
                 options: {
                     target: 'es5',

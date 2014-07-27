@@ -1,4 +1,4 @@
-/// <reference path="../TypeFramework.ts" />
+/// <reference path="TypeFramework.ts" />
 
 module TF {
     export class Configuration {
