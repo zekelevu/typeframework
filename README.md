@@ -27,6 +27,9 @@ Run your app:
 $ cd testProject
 $ tfw start
 ```
+
+And Voilà, your application has started. Visit [http://localhost:3000](http://localhost:3000) and you should see the default homepage.
+
 ## View Live Examples
 
 You can also view live examples here:
