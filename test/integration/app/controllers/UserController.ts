@@ -7,5 +7,3 @@ class UserController extends TF.Controller {
     }
 
 }
-
-app.addController(UserController);

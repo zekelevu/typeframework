@@ -85,5 +85,3 @@ class HomeController extends TF.Controller {
     static staticFunction() {}
 
 }
-
-app.addController(HomeController);

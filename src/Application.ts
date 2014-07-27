@@ -39,6 +39,9 @@ module TF {
         }
 
         public addModel(model: any) {
+            if (model.hasOwnProperty('configure'))
+                model.configure();
+
             var info = new ModelInfo(model, this.declaration);
             this.models.push(info);
         }

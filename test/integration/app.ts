@@ -11,4 +11,8 @@
 /// <reference path="app/controllers/HomeController.ts" />
 /// <reference path="app/controllers/UserController.ts" />
 
+app.addModel(User);
+app.addController(HomeController);
+app.addController(UserController);
+
 app.start();
