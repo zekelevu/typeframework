@@ -8,7 +8,7 @@ app.configure(() => {
     app.config.addJson(app.root + 'app.json');
 
     // default routes
-    app.router.map('/', { controller: 'Home', action: 'index', name: 'zeke' });
+    app.router.map('/', { controller: 'Home', action: 'index' });
     app.router.map('/:controller/:action?/:id?', { action: 'index' });
 
     // REST routes
