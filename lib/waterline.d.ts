@@ -8,16 +8,16 @@ declare module WL {
     }
 
     interface Result<T> {
-        done(callback: T): void
+        done(callback: T): void;
     }
 
     interface IQuery {
-        where(query: {}): IQuery
-        skip(count: number): IQuery
-        limit(count: number): IQuery
-        sort(query: string): IQuery
-        sort(query: {}): IQuery
-        done(callback: MultipleResult): void
+        where(query: {}): IQuery;
+        skip(count: number): IQuery;
+        limit(count: number): IQuery;
+        sort(query: string): IQuery;
+        sort(query: {}): IQuery;
+        done(callback: MultipleResult): void;
     }
 
     interface CollectionInitializeCallback {
@@ -25,21 +25,21 @@ declare module WL {
     }
 
     class Collection {
-        constructor(options: {}, callback: CollectionInitializeCallback)
-        findOne(filter: any): Result<SingleResult>
-        find(): IQuery
-        find(query: {}): IQuery
-        query(query: string): Result<MultipleResult>
+        constructor(options: {}, callback: CollectionInitializeCallback);
+        findOne(filter: any): Result<SingleResult>;
+        find(): IQuery;
+        find(query: {}): IQuery;
+        query(query: string): Result<MultipleResult>;
 
-        create(model: {}): Result<SingleResult>
-        update(query: {}, change: {}, callback: Result<SingleResult>)
-        destroy(query: {}): Result<SingleResult>
+        create(model: {}): Result<SingleResult>;
+        update(query: {}, change: {}, callback: Result<SingleResult>);
+        destroy(query: {}): Result<SingleResult>;
 
-        static extend(model: {}): typeof Collection
+        static extend(model: {}): any;
     }
 
     class CollectionStatic {
-        extend(model: {}): typeof Collection
+        extend(model: {}): any;
     }
 
     class Waterline {
