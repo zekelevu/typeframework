@@ -11,8 +11,7 @@
 'export'                                return ''
 'declare'                               return ''
 'var'                                   return ''
-'/*'                                    return 'COMMENT_OPEN'
-'*/'                                    return 'COMMENT_CLOSE'
+'function'                              return ''
 ';'                                     return 'TERMINATOR'
 '[]'                                    return 'ARRAY'
 \<([\w\.]+\s*\,?\s*)+\>                 return 'GENERIC'
@@ -27,7 +26,6 @@
 'public'                                return 'KEYWORD'
 'private'                               return 'KEYWORD'
 '...'                                   return 'KEYWORD'
-'{}'                                    return 'OBJECT'
 [\w$_]+                                 return 'IDENTIFIER'
 [\[\]{}(),:?.=>]                        return yytext
 
@@ -43,14 +41,12 @@ expressions
         {return $1}
     ;
 Block
-    : '{' BlockItems '}'
+    : '{' '}'
+       {$$ = []}
+    | '{' Index '}'
        {$$ = $2}
-    | '{' Lambda '}'
-       {$$ = [$2]}
-    | '{' '}'
-       {$$ = []}
-    | OBJECT
-       {$$ = []}
+    | '{' BlockItems '}'
+       {$$ = $2}
     ;
 BlockItems
     : BlockItem
@@ -59,50 +55,56 @@ BlockItems
         {$$ = $1; $$.push($2)}
     ;
 BlockItem
-    : Class
-        {$$ = $1}
-    | Line
-        {$$ = $1}
-    ;
-Class
-    : CLASS Identifier Block
-        {$$ = { type: $1, name: $2, members: $3 }}
-    | CLASS Identifier EXTENDS TypeList Block
-        {$$ = { type: $1, name: $2, extends: $4, members: $5 }}
-    | CLASS Identifier IMPLEMENTS TypeList Block
-        {$$ = { type: $1, name: $2, implements: $4, members: $5 }}
-    | CLASS Identifier EXTENDS TypeList IMPLEMENTS TypeList Block
-        {$$ = { type: $1, name: $2, extends: $4, implements: $5, members: $6 }}
-    ;
-Line
-    : Variable
-        {$$ = $1}
-    | '[' Variable ']' ':' Type
-        {$$ = []}
+    : Class Block
+        {$$ = $1, $$.members = $2}
     | Line TERMINATOR
         {$$ = $1}
     ;
-Lambda
-    : ParameterBlock ':' Type
-        {$$ = { type: "lambda", parameters: $1, return: $3 }}
-    | Lambda TERMINATOR
+Class
+    : CLASS Identifier
+        {$$ = {type: $1, name: $2}}
+    | CLASS Identifier EXTENDS TypeList
+        {$$ = {type: $1, name: $2, extends: $4}}
+    | CLASS Identifier IMPLEMENTS TypeList
+        {$$ = {type: $1, name: $2, implements: $4}}
+    | CLASS Identifier EXTENDS TypeList IMPLEMENTS TypeList
+        {$$ = {type: $1, name: $2, extends: $4, implements: $5}}
+    ;
+Line
+    : Index
         {$$ = $1}
+    | Variable
+        {$$ = $1}
+    | Function
+        {$$ = $1}
+    ;
+Index
+    : '[' Identifier ':' Type ']' ':' Type
+        {$$ = {type: 'index', name: ''}}
     ;
 Variable
     : Identifier
-        {$$ = { type: 'variable', name: $1 }}
-    | KEYWORD Identifier
-        {$$ = { type: 'variable', name: $2, keywords: [$1] }}
-    | KEYWORD KEYWORD Identifier
-        {$$ = { type: 'variable', name: $3, keywords: [$1, $2] }}
+        {$$ = {type: 'variable', name: $1}}
+    | KeywordList Identifier
+        {$$ = {type: 'variable', name: $2, keywords: $1}}
     | Variable '?'
-        {$$ = $1; $$.optional = true }
+        {$$ = $1; $$.optional = true}
     | Variable ParameterBlock
         {$$ = $1; $$.type = 'function', $$.parameters = $2}
-    | Variable ':' '{' BlockItems '}'
-        {$$ = $1; $$.return = $3 }
     | Variable ':' Type
-        {$$ = $1; $$.return = $3 }
+        {$$ = $1; $$.return = $3}
+    ;
+Function
+    : ParameterBlock
+        {$$ = {type: 'function', name: '', parameters: $1}}
+    | Function ':' Type
+        {$$ = $1; $$.return = $3}}
+    ;
+KeywordList
+    : KEYWORD
+        {$$ = [$1]}
+    | KeywordList KEYWORD
+        {$$ = $1; $$.push($2)}
     ;
 ParameterBlock
     : '(' Parameters ')'
@@ -124,11 +126,11 @@ TypeList
     ;
 FunctionType
     : ParameterBlock '=' '>' Identifier
-        {$$ = { type: 'function', parameters: $1, return: $4 }}
+        {$$ = {type: 'function', parameters: $1, return: $4}}
     ;
 Type
-    : OBJECT
-        {$$ = $1}
+    : Block
+        {$$ = '{}'}
     | Identifier
         {$$ = $1}
     | FunctionType
