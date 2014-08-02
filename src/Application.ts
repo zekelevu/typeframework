@@ -184,6 +184,8 @@ module TF {
 
         private route(route: Route) {
             var action = (req: EX.Request, res: EX.Response, next: Function) => {
+                res.header('X-Powered-By', 'TypeFramework');
+
                 var controllerName = req.params.controller || route.defaults.controller;
                 if (!controllerName) {
                     next(); return;
