@@ -93,6 +93,11 @@ class HomeController extends TF.Controller {
         this.view('viewWithoutLayout', { message: 'viewWithoutLayout' });
     }
 
+    customHeader() {
+        this.response.setHeader('custom-header', 'test');
+        this.content('');
+    }
+
     private privateFunction() {
         this.content('private');
     }

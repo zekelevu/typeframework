@@ -68,6 +68,7 @@ describe('Test App', function() {
         testHeader(root + '/home/redirectToHomePermanently', { location: '/' }, 301);
         testHeader(root + '/home/fileContent', { 'content-type': 'application/json' });
         testHeader(root + '/home/downloadFile', { 'content-disposition': 'attachment; filename="app.json"' });
+        testHeader(root + '/home/customHeader', { 'custom-header': 'test' });
 
         testBody(root + '/home/any/10', '10:string');
         testBody(root + '/home/anyArray/10', '10:object');
