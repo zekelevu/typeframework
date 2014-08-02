@@ -90,7 +90,7 @@ class HomeController extends TF.Controller {
     }
 
     viewWithoutLayout() {
-        this.view('viewWithoutLayout', { layout: false, message: 'viewWithoutLayout' });
+        this.view('viewWithoutLayout', { message: 'viewWithoutLayout' });
     }
 
     private privateFunction() {

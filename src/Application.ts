@@ -61,7 +61,7 @@ module TF {
             this.express = express();
             this.express.set('views', this.root + this.config.get('paths.views'));
             this.express.set('view engine', 'ejs');
-            this.express.set('layout', '');
+            this.express.set('layout', false);
 
             // add compression middleware
             this.express.use(require('compression')());

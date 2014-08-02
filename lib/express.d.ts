@@ -980,9 +980,9 @@ declare module EX {
          * @param setting
          * @param val
          */
-        set (setting: string, val: string): Application;
+        set (setting: string, val: any): Application;
 
-        get(name: string): string;
+        get(name: string): any;
 
         get(name: string, ...handlers: RequestFunction[]): Application;
 
@@ -1824,7 +1824,7 @@ declare module EX {
      */
     function vhost(hostname: string, server: any): Handler;
 
-    function urlencoded(options?: {}): any;
+    function urlencoded(options: {}): any;
 
     function multipart(): any;
 
