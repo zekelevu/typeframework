@@ -110,7 +110,7 @@ module TF {
         }
 
         content(text: string, contentType?: string) {
-            if (contentType) this.response.contentType(contentType);
+            if (contentType) this.response.setContentType(contentType);
             this.send(new ContentResult(text));
         }
 
@@ -165,7 +165,7 @@ module TF {
             if (!!id) {
                 this._model.first({id: id}).done((err, model: Model) => {
                     if (!model) {
-                        this.response.status(404);
+                        this.response.setStatus(404);
                         this.json({ error: 'not found' });
                         return;
                     }
@@ -196,7 +196,7 @@ module TF {
         update(id: string) {
             this._model.first({id: id}).done((err, model: Model) => {
                 if (!model) {
-                    this.response.status(404);
+                    this.response.setStatus(404);
                     this.json({ error: 'not found' });
                     return;
                 }
@@ -208,7 +208,7 @@ module TF {
         destroy(id: string) {
             this._model.first({id: id}).done((err, model: Model) => {
                 if (!model) {
-                    this.response.status(404);
+                    this.response.setStatus(404);
                     this.json({ error: 'not found' });
                     return;
                 }

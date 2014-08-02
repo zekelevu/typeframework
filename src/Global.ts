@@ -14,5 +14,15 @@ var extend = function (d, b) {
 };
 
 module TF {
+    export interface CookieOption {
+        domain?: string;
+        path?: string;
+        secure?: boolean;
+        httpOnly?: boolean;
+        expires?: Date;
+        maxAge?: number;
+        signed?: boolean;
+    }
+
     export var collections: WL.Collection[] = [];
 }
