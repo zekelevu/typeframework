@@ -61,7 +61,7 @@ module TF {
             this.express = express();
             this.express.set('views', this.root + this.config.get('paths.views'));
             this.express.set('view engine', 'ejs');
-            this.express.set('layout', 'layout');
+            this.express.set('layout', '');
 
             // add compression middleware
             this.express.use(require('compression')());
@@ -231,10 +231,36 @@ module TF {
                     return paramData;
                 });
 
-                var controller = new controllerInfo.type(req, res);
+                var response = new Response(res);
+                var result: IActionResult = null;
 
+                // generate after action filter chain
+                var complete = () => { result.execute(this, response) };
+                var afterActionChain = _.reduce(controllerInfo.type.filters || [], (next, filter: ActionFilter) => {
+                    if (!filter['after'] || !filter.contains(actionName)) return next;
+                    return function() {
+                        filter['after'].call(filter, {
+                            request: req,
+                            response: response,
+                            result: result,
+                            send: (actionResult: IActionResult) => { result = actionResult; complete(); },
+                            next: next });
+                    };
+                }, complete);
+
+                // result will action will be executed when controller finish executing controller action
+                var resultAction = (actionResult: IActionResult) => {
+                    result = actionResult;
+                    afterActionChain();
+                };
+
+                // generate controller
+                var controller = new controllerInfo.type(req, response, resultAction);
+                var controllerAction = () => { controller[actionName].apply(controller, params) };
+
+                // generate model controller actions if has model
                 if (!!controllerInfo.type.model) {
-                    var modelController = new ModelController(req, res, controllerInfo.type.model);
+                    var modelController = new ModelController(req, response, resultAction, controllerInfo.type.model);
                     controller._model = modelController._model;
                     !controller.find && (controller.find = modelController.find);
                     !controller.create && (controller.create = modelController.create);
@@ -242,16 +268,19 @@ module TF {
                     !controller.destroy && (controller.destroy = modelController.destroy);
                 }
 
-                // controller action
-                var action: Function = function() { controller[actionName].apply(controller, params) };
+                // generate before action filter chain
+                var chain = _.reduceRight(controllerInfo.type.filters || [], (next, filter: ActionFilter) => {
+                    if (!filter['before'] || !filter.contains(actionName)) return next;
+                    return function() {
+                        filter['before'].call(filter, {
+                            request: req,
+                            response: response,
+                            send: (actionResult: IActionResult) => { result = actionResult; complete(); },
+                            next: next });
+                    };
+                }, controllerAction);
 
-                // generate action filter chain
-                action = _.reduceRight(controllerInfo.type.filters || [], (next, filter: ActionFilter) => {
-                    if (!filter.contains(actionName)) return next;
-                    return function() { filter.before.call(controllerInfo.type, { request: req, response: res, next: next }) };
-                }, action);
-
-                action();
+                chain();
             };
 
             // map routes
