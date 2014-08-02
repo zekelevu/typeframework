@@ -3,83 +3,98 @@
 class HomeController extends TF.Controller {
 
     static configure() {
-        this.addFilter((context: TF.ActionFilterContext) => {
-            if (context.request.param('filter') == 'filter1') context.response.send('filter1');
-            else context.next();
-        })
-        .includes('actionWithBeforeFilter1', 'actionWithAllBeforeFilters');
+        this.addFilter(ActionFilter1).only('actionWithBeforeFilter1', 'actionWithAllBeforeFilters');
+        this.addFilter(ActionFilter2).only('actionWithBeforeFilter2', 'actionWithAllBeforeFilters');
+        this.addBeforeFilter(this.filter3).except('actionWithBeforeFilter1', 'actionWithBeforeFilter2', 'actionWithoutBeforeFilters');
+    }
 
-        this.addFilter((context: TF.ActionFilterContext) => {
-            if (context.request.param('filter') == 'filter2') context.response.send('filter2');
-            else context.next();
-        })
-        .includes('actionWithBeforeFilter2', 'actionWithAllBeforeFilters');
-
-        this.addFilter((context: TF.ActionFilterContext) => {
-            if (context.request.param('filter') == 'filter3') context.response.send('filter3');
-            else context.next();
-        })
-        .excludes('actionWithBeforeFilter1', 'actionWithBeforeFilter2', 'actionWithoutBeforeFilters');
+    static filter3(context: TF.IActionFilterContext) {
+        if (context.request.param('filter') == 'filter3') context.send(new TF.ContentResult('filter3'));
+        else context.next();
     }
 
     index() {
-        this.response.send('home');
+        this.content('home');
     }
 
     number(id: number) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     numberArray(id: number[]) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     boolean(id: boolean) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     booleanArray(id: boolean[]) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     string(id: string) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     stringArray(id: string[]) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     any(id: any) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     anyArray(id: any[]) {
-        this.response.send(id + ':' + typeof id);
+        this.content(id + ':' + typeof id);
     }
 
     actionWithBeforeFilter1() {
-        this.response.send('actionWithBeforeFilter1');
+        this.content('actionWithBeforeFilter1');
     }
 
     actionWithBeforeFilter2() {
-        this.response.send('actionWithBeforeFilter2');
+        this.content('actionWithBeforeFilter2');
     }
 
     actionWithBeforeFilter3() {
-        this.response.send('actionWithBeforeFilter3');
+        this.content('actionWithBeforeFilter3');
     }
 
     actionWithAllBeforeFilters() {
-        this.response.send('actionWithoutBeforeFilters');
+        this.content('actionWithoutBeforeFilters');
     }
 
     actionWithoutBeforeFilters() {
-        this.response.send('actionWithoutBeforeFilters');
+        this.content('actionWithoutBeforeFilters');
+    }
+
+    redirectToHome() {
+        this.redirect('/');
+    }
+
+    redirectToHomePermanently() {
+        this.redirect('/', 301);
+    }
+
+    fileContent() {
+        this.file('app.json');
+    }
+
+    downloadFile() {
+        this.download('app.json');
+    }
+
+    viewWithLayout() {
+        this.view('viewWithLayout', { layout: 'layout', message: 'view' });
+    }
+
+    viewWithoutLayout() {
+        this.view('viewWithoutLayout', { layout: false, message: 'viewWithoutLayout' });
     }
 
     private privateFunction() {
-        this.response.send('private');
+        this.content('private');
     }
 
     static staticFunction() {}

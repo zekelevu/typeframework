@@ -3,6 +3,7 @@
 
 /// <HELPER REFERENCES>
 /// <reference path="app/Global.ts" />
+/// <reference path="app/ActionFilters.ts" />
 
 /// <MODEL REFERENCES>
 /// <reference path="app/models/User.ts" />
