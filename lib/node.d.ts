@@ -34,8 +34,12 @@ declare function clearImmediate(immediateId: any): void;
  ************************************************/
 
 declare module NodeJS {
-    export interface Require{
-        (path: string): any;
+    export interface Require {
+        (id: string): any;
+        resolve(id:string): string;
+        cache: any;
+        extensions: any;
+        main: any;
     }
 
     export interface ErrnoException extends Error {
