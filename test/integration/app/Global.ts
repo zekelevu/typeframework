@@ -2,9 +2,12 @@
 
 declare var require: NodeJS.Require;
 var path = <NodeJS.Path> require('path');
-var app = new TF.Application(__dirname + '/..', __dirname + '/app.d.ts');
+var app = new TF.Application(__dirname + '/..');
 
 app.configure(() => {
+    // add declaration file
+    app.addDeclaration('.build/app.d.ts');
+
     // load config
     app.config.addJson('app.json');
 

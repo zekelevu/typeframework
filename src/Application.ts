@@ -11,11 +11,10 @@ module TF {
         private models: ModelInfo[] = [];
         private controllers: ControllerInfo[] = [];
 
-        constructor(root: string, declarationPath: string) {
+        constructor(root: string) {
             this.root = root;
             this.config = new Configuration(root);
             this.router = new Router();
-            this.declaration = new Declaration(declarationPath);
 
             // default settings
             this.config.set('env', !process.env.NODE_ENV ? 'development' : process.env.NODE_ENV);
@@ -28,6 +27,10 @@ module TF {
 
         public configure(callback: () => void) {
             callback.call(this);
+        }
+
+        public addDeclaration(filePath: string) {
+            this.declaration = new Declaration(path.join(this.root, filePath));
         }
 
         public addController(controller: any) {
