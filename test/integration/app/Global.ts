@@ -2,7 +2,7 @@
 
 declare var require: NodeJS.Require;
 var path = <NodeJS.Path> require('path');
-var app = new TF.Application(__dirname + '/..');
+var app = new TF.Application(path.join(__dirname, '..'));
 
 app.configure(() => {
     // add declaration file
