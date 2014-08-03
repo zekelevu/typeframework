@@ -7,17 +7,15 @@ module TF {
         root: string;
 
         private express: EX.Application;
+        private declaration: Declaration;
         private models: ModelInfo[] = [];
         private controllers: ControllerInfo[] = [];
-        private declaration: Declaration;
 
         constructor(root: string, declarationPath: string) {
             this.root = root;
             this.config = new Configuration();
             this.router = new Router();
             this.declaration = new Declaration(declarationPath);
-            this.models = [];
-            this.controllers = [];
 
             // default settings
             this.config.set('env', !process.env.NODE_ENV ? 'development' : process.env.NODE_ENV);
