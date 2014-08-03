@@ -22,8 +22,10 @@ module TF {
             // default settings
             this.config.set('env', !process.env.NODE_ENV ? 'development' : process.env.NODE_ENV);
             this.config.set('port', 3000);
-            this.config.set('paths.views', 'app/views');
-            this.config.set('paths.public', 'public');
+            this.config.set('assetPath', 'public');
+            this.config.set('view.path', 'app/views');
+            this.config.set('view.engine', 'ejs');
+            this.config.set('view.layout', false);
         }
 
         public configure(callback: () => void) {
@@ -59,9 +61,9 @@ module TF {
         private buildExpress() {
             var express: any = require('express');
             this.express = express();
-            this.express.set('views', this.root + this.config.get('paths.views'));
-            this.express.set('view engine', 'ejs');
-            this.express.set('layout', false);
+            this.express.set('views', this.root + this.config.get('view.path'));
+            this.express.set('view engine', this.config.get('view.engine'));
+            this.express.set('layout', this.config.get('view.layout'));
 
             // add compression middleware
             this.express.use(require('compression')());
@@ -137,7 +139,7 @@ module TF {
         private buildRoutes() {
             // public folder
             var expressStatic: any = require('express').static;
-            this.express.use(expressStatic(this.root + this.config.get('paths.public')));
+            this.express.use(expressStatic(this.root + this.config.get('assetPath')));
 
             // routes
             this.router.routes.forEach((route: Route) => {
