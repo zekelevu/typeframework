@@ -59,7 +59,7 @@ module TF {
         private buildExpress() {
             var express: any = require('express');
             this.express = express();
-            this.express.set('views', this.root + this.config.get('view.path'));
+            this.express.set('views', path.join(this.root, this.config.get('view.path')));
             this.express.set('view engine', this.config.get('view.engine'));
             this.express.set('layout', this.config.get('view.layout'));
 
@@ -137,7 +137,7 @@ module TF {
         private buildRoutes() {
             // public folder
             var expressStatic: any = require('express').static;
-            this.express.use(expressStatic(this.root + this.config.get('assetPath')));
+            this.express.use(expressStatic(path.join(this.root, this.config.get('assetPath'))));
 
             // routes
             this.router.routes.forEach((route: Route) => {

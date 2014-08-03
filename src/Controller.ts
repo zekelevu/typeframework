@@ -29,7 +29,7 @@ module TF {
     export class FileResult implements IActionResult {
         constructor(public path: string) {}
         execute(app: Application, response: Response) {
-            var file = path.resolve(app.root + '/' + this.path);
+            var file = path.join(app.root, this.path);
             response.express.sendfile(file);
         }
     }
@@ -37,7 +37,7 @@ module TF {
     export class DownloadResult implements IActionResult {
         constructor(public path: string, public filename?: string) {}
         execute(app: Application, response: Response) {
-            var file = path.resolve(app.root + '/' + this.path);
+            var file = path.join(app.root, this.path);
             response.express.attachment(file);
             response.express.sendfile(file, this.filename);
         }
