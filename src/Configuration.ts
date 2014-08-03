@@ -4,13 +4,16 @@ module TF {
     export class Configuration {
         private data: {} = {};
 
-        addJson(path: string) {
-            if (!fs.existsSync(path)) {
+        constructor(private appRoot: string) {}
+
+        addJson(filePath: string) {
+            filePath = path.join(this.appRoot, filePath);
+            if (!fs.existsSync(filePath)) {
                 console.log('Config ' + path + ' is not found!');
                 return;
             }
 
-            var config = JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }));
+            var config = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf8' }));
             this.readConfig('', config);
         }
 

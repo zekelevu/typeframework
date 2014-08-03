@@ -6,7 +6,7 @@ var app = new TF.Application(__dirname + '/..', __dirname + '/app.d.ts');
 
 app.configure(() => {
     // load config
-    app.config.addJson(path.join(app.root, 'app.json'));
+    app.config.addJson('app.json');
 
     // default routes
     app.router.map('/', { controller: 'Home', action: 'index' });

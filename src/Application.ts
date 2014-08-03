@@ -13,7 +13,7 @@ module TF {
 
         constructor(root: string, declarationPath: string) {
             this.root = root;
-            this.config = new Configuration();
+            this.config = new Configuration(root);
             this.router = new Router();
             this.declaration = new Declaration(declarationPath);
 
