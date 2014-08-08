@@ -22,7 +22,7 @@ module TF {
             return this.express.get(field);
         }
 
-        setCookie(name: string, value: string, options?: CookieOption): Response {
+        setCookie(name: string, value: string, options?: ICookieOption): Response {
             this.express.cookie(name, value, options);
             return this;
         }

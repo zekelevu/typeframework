@@ -14,7 +14,7 @@ var extend = function (d, b) {
 };
 
 module TF {
-    export interface CookieOption {
+    export interface ICookieOption {
         domain?: string;
         path?: string;
         secure?: boolean;
