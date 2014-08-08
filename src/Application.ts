@@ -2,6 +2,7 @@
 
 module TF {
     export class Application {
+        collections: WL.Collection[] = [];
         config: Configuration;
         router: Router;
         root: string;
@@ -132,9 +133,11 @@ module TF {
 
                 var Collection = Waterline.Collection.extend(definition);
                 new Collection({ adapters: { 'default': adapter } }, (err, collection) => {
-                    TF.collections[model.name] = collection;
+                    this.collections[model.name] = collection;
                 });
             });
+
+            Model.collections = this.collections;
         }
 
         private buildRoutes() {

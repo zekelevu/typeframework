@@ -23,6 +23,4 @@ module TF {
         maxAge?: number;
         signed?: boolean;
     }
-
-    export var collections: WL.Collection[] = [];
 }

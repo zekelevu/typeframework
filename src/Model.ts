@@ -66,6 +66,7 @@ module TF {
         public static schema = true;
         public static adapter = 'default';
         public static attributes = {};
+        public static collections: WL.Collection[];
 
         save<T>(callback: ISingleResultCallback<T>) {
             if (!this['$save'])
@@ -131,7 +132,7 @@ module TF {
 
         private static collection(obj: any) {
             var prototype = typeof obj == 'function' ? 'prototype' : '__proto__';
-            return TF.collections[obj[prototype]['constructor']['name']];
+            return this.collections[obj[prototype]['constructor']['name']];
         }
 
         private static extend(from, to) {
