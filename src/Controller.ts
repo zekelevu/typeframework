@@ -155,7 +155,7 @@ module TF {
             var model = new this._model();
             ModelController.bindModel(model, this.request);
 
-            model.save((err) => {
+            this._model.save(model, (err) => {
                 if (err) this.json(err);
                 else this.json(model);
             })
@@ -169,7 +169,7 @@ module TF {
                     return;
                 }
                 ModelController.bindModel(model, this.request);
-                model.save((err) => this.json(model));
+                this._model.save(model, (err) => this.json(model));
             });
         }
 
@@ -180,7 +180,7 @@ module TF {
                     this.json({ error: 'not found' });
                     return;
                 }
-                model.destroy((err) => this.json(model));
+                this._model.destroy(model, (err) => this.json(model));
             });
         }
 

@@ -66,26 +66,28 @@ module TF {
         public static schema = true;
         public static adapter = 'default';
         public static attributes = {};
-        public static collections: WL.Collection[];
 
-        save<T>(callback: ISingleResultCallback<T>) {
-            if (!this['$save'])
-                Model.collection(this).create(this).done((err, newModel: T) => {
-                    var model = Model.extend(newModel, this);
-                    model['$save'] = model['save'];
-                    model['$destroy'] = model['destroy'];
+        private static collection: WL.Collection;
+
+        save:<T> (callback: ISingleResultCallback<T>) => void;
+        destroy:<T> (callback: INoResultCallback<T>) => void;
+
+        static save<T>(model: T, callback: ISingleResultCallback<T>) {
+            var obj = Model.extend(model, {});
+            if (!model['save'])
+                this.collection.create(obj).done((err, newModel: T) => {
+                    model = Model.extend(newModel, model);
                     callback(err, model);
                 });
-            else {
-                this['$save'].done((err) => callback(err, null));
-            }
+            else
+                model['save']((err) => callback(err, model));
         }
 
-        destroy<T>(callback: INoResultCallback<T>) {
-            if (!this['$destroy'])
-                throw new Error('model not found');
+        static destroy<T>(model: T, callback: INoResultCallback<T>) {
+            if (!model['$destroy'])
+                throw new Error('Model not found');
 
-            this['$destroy'].done((err) => callback(err));
+            model['destroy']((err) => callback(err));
         }
 
         static all<T>(): DbQueryEnd<T> {
@@ -94,26 +96,26 @@ module TF {
         }
 
         static where(query: {}) {
-            return Model.collection(this).find().where(query);
+            return this.collection.find().where(query);
         }
 
         static get(id: number): DbQueryUnique<any> {
-            var wQuery = Model.collection(this).findOne({id: id});
+            var wQuery = this.collection.findOne({id: id});
             return new DbQueryUnique<any>(wQuery);
         }
 
         static first<T>(query: {}): DbQueryUnique<T> {
-            var wQuery = Model.collection(this).findOne(query);
+            var wQuery = this.collection.findOne(query);
             return new DbQueryUnique<T>(wQuery);
         }
 
         static find<T>(): DbQuery<T> {
-            var query = Model.collection(this).find();
+            var query = this.collection.find();
             return new DbQuery<T>(query);
         }
 
         static query<T>(query: string): DbQueryRaw<T> {
-            var wQuery = Model.collection(this).query(query);
+            var wQuery = this.collection.query(query);
             return new DbQueryRaw<T>(wQuery);
         }
 
@@ -128,11 +130,6 @@ module TF {
                     Model.validate(attr, definition);
                 })
             }
-        }
-
-        private static collection(obj: any) {
-            var prototype = typeof obj == 'function' ? 'prototype' : '__proto__';
-            return this.collections[obj[prototype]['constructor']['name']];
         }
 
         private static extend(from, to) {
