@@ -13,8 +13,9 @@ module TF {
     }
 
     export class ContentResult implements IActionResult {
-        constructor(public content: string) {}
+        constructor(public content: string, public contentType?: string) {}
         execute(app: Application, response: Response) {
+            if (!!this.contentType) response.setContentType(this.contentType);
             response.express.send(this.content);
         }
     }
@@ -57,7 +58,7 @@ module TF {
     export interface IActionFilterContext {
         request: Request;
         response: Response;
-        send: (IActionResult) => void;
+        reply: Reply;
         next: () => void;
         result?: IActionResult;
     }
@@ -91,45 +92,12 @@ module TF {
         }
     }
 
-    export class Controller {
-        request: Request;
-        response: Response;
-        send: (IActionResult) => void;
-
+    export class Controller extends Reply {
         static filters: any[];
         static model: any = null;
 
-        constructor(request: Request, response: Response, send: (IActionResult) => void) {
-            this.request = request;
-            this.response = response;
-            this.send = send;
-        }
-
-        redirect(url: string, status: number = 302) {
-            this.send(new RedirectResult(url, status));
-        }
-
-        content(text: string, contentType?: string) {
-            if (contentType) this.response.setContentType(contentType);
-            this.send(new ContentResult(text));
-        }
-
-        json(data: {}) {
-            this.send(new JsonResult(data));
-        }
-
-        file(path: string) {
-            this.send(new FileResult(path));
-        }
-
-        download(path: string, filename?: string) {
-            this.send(new DownloadResult(path, filename));
-        }
-
-        view(template: string, options?: {}) {
-            var result = new ViewResult(template);
-            if (options) result.options = options;
-            this.send(result);
+        constructor(public request: Request, public response: Response, send: (IActionResult) => void) {
+            super(send);
         }
 
         static addBeforeFilter(action: IFilterAction): ActionFilter {

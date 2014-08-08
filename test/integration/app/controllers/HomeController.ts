@@ -9,7 +9,7 @@ class HomeController extends TF.Controller {
     }
 
     static filter3(context: TF.IActionFilterContext) {
-        if (context.request.param('filter') == 'filter3') context.send(new TF.ContentResult('filter3'));
+        if (context.request.param('filter') == 'filter3') context.reply.content('filter3');
         else context.next();
     }
 

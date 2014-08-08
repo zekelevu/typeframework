@@ -248,7 +248,7 @@ module TF {
                             request: req,
                             response: response,
                             result: result,
-                            send: (actionResult: IActionResult) => { result = actionResult; complete(); },
+                            reply: new Reply((actionResult: IActionResult) => { result = actionResult; complete(); }),
                             next: next });
                     };
                 }, complete);
@@ -280,7 +280,7 @@ module TF {
                         filter['before'].call(filter, {
                             request: req,
                             response: response,
-                            send: (actionResult: IActionResult) => { result = actionResult; complete(); },
+                            reply: new Reply((actionResult: IActionResult) => { result = actionResult; complete(); }),
                             next: next });
                     };
                 }, controllerAction);
