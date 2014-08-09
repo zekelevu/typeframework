@@ -1,6 +1,5 @@
 /// <reference path="TypeFramework.ts" />
 
-declare var require: NodeJS.Require;
 var _ = <LoDash.LoDashStatic> require('lodash');
 var fs = <NodeJS.FS.FSStatic> require('fs');
 var path = <NodeJS.Path> require('path');

@@ -1,6 +1,5 @@
 /// <reference path="../app.ts" />
 
-declare var require: NodeJS.Require;
 var path = <NodeJS.Path> require('path');
 var app = new TF.Application(path.join(__dirname, '..'));
 
