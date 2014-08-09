@@ -3,5 +3,20 @@ layout: default
 title: documentation
 ---
 
-{% capture content %}{% include documentation.md %}{% endcapture %}
+{% capture content %}{% include documentation/current/index.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/current/controllers.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/current/models.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/current/views.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/current/routing.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/current/configuration.md %}{% endcapture %}
 {{ content | markdownify }}

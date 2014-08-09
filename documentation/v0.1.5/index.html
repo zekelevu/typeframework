@@ -1,0 +1,22 @@
+---
+layout: default
+title: documentation
+---
+
+{% capture content %}{% include documentation/v0.1.5/index.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/v0.1.5/controllers.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/v0.1.5/models.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/v0.1.5/views.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/v0.1.5/routing.md %}{% endcapture %}
+{{ content | markdownify }}
+
+{% capture content %}{% include documentation/v0.1.5/configuration.md %}{% endcapture %}
+{{ content | markdownify }}
