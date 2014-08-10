@@ -22,6 +22,9 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+.btn:focus {
+    outline: none;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -364,7 +367,8 @@ h6:before {
 }
 
 #sidebar .affix {
-    top: 10px;
+    top: 20px;
+    width: 200px;
 }
 
 p {

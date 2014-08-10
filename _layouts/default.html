@@ -7,12 +7,13 @@
     <meta name="description" content="TypeFramework is a MVC Web Application Framework that runs on Node.js with TypeScript. TypeFramework combines the performance of NodeJS platform together with the power of TypeScript to give you a web framework that is fast and scalable." />
     <meta name="author" content="Zeke Kievel" />
 
-    <link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Architects+Daughter'>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print"/>
-    <link rel="stylesheet" type='text/css' href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Architects+Daughter'>
+    <link rel="stylesheet" href="/stylesheets/stylesheet.css" media="screen"/>
+    <link rel="stylesheet" href="/stylesheets/pygment_trac.css" media="screen"/>
+    <link rel="stylesheet" href="/stylesheets/print.css" media="print"/>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,11 +61,18 @@
         </section>
 
         <aside id="sidebar">
-            <div data-spy="affix" data-offset-top="260">
+            <div data-spy="affix" data-offset-top="250">
             {% if page.title == "documentation" %}
-                <h2>Guides</h2>
-                <ul class="guides">
-                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-lg btn-default btn-block" data-toggle="dropdown">Reference: {{ page.version }} <i class="fa fa-caret-down"></i></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/documentation/">v0.2.0</a></li>
+                        <li><a href="/documentation/v0.1.5/">v0.1.5</a></li>
+                    </ul>
+                </div>
+                <br><br>
+                <h2>Developer Guide</h2>
+                <ul class="guides"></ul>
                 <br><br>
             {% endif %}
 
