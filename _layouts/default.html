@@ -7,17 +7,19 @@
     <meta name="description" content="TypeFramework is a MVC Web Application Framework that runs on Node.js with TypeScript. TypeFramework combines the performance of NodeJS platform together with the power of TypeScript to give you a web framework that is fast and scalable." />
     <meta name="author" content="Zeke Kievel" />
 
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type='text/css' href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Architects+Daughter'>
     <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print"/>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
+    <link rel="stylesheet" type='text/css' href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="/javascripts/highlight.pack.js"></script>
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
@@ -42,7 +44,7 @@
 <body>
 <header>
     <div class="inner">
-        <h1><a href="/">TypeFramework</a><sub>preview</sub></h1>
+        <h1><a href="/">TypeFramework</a></h1>
         <h2>A MVC Web Framework for TypeScript</h2>
         <br><br>
         <a href="/" class="link">Home</a>
@@ -58,6 +60,7 @@
         </section>
 
         <aside id="sidebar">
+            <div data-spy="affix" data-offset-top="260">
             {% if page.title == "documentation" %}
                 <h2>Guides</h2>
                 <ul class="guides">
@@ -65,8 +68,8 @@
                 <br><br>
             {% endif %}
 
-            <p class="repo-owner"><a href="https://github.com/zekelevu/typeframework">TypeFramework</a> is maintained by
-                <a href="https://github.com/zekelevu">Zeke Kievel</a>.</p>
+            <p class="repo-owner"><a href="https://github.com/zekelevu/typeframework">TypeFramework</a> is maintained <br>by <a href="https://github.com/zekelevu">Zeke Kievel</a>.</p>
+            </div>
         </aside>
     </div>
 </div>
