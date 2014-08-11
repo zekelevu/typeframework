@@ -26,23 +26,42 @@
         hljs.initHighlightingOnLoad();
 
         $(function() {
-            function getTableOfContent(heading) {
-                var $items = $('#main-content > ' + heading);
+            function getTableOfContent() {
+                var $items = $('#main-content > h1');
                 $items.each(function() {
-                    var id = $(this).attr('id');
-                    var text = $(this).text();
-                    $('<li><a href="#' + id + '">' + text + '</a></li>').appendTo('#sidebar .guides');
+                    var $h1 = $(this);
+                    var id = $h1.attr('id');
+                    var text = $h1.text();
+
+                    var ul = $('<ul class="nav sub"></ul>');
+                    var li = $('<li><a href="#' + id + '">' + text + '</a></li>');
+
+                    ul.appendTo(li);
+                    li.appendTo('#guides');
+
+                    var $next = $h1;
+                    while (true) {
+                        $next = $next.next();
+                        var subItem = $next.length == 0 ? null : $next[0];
+                        if (!subItem || subItem.tagName == 'H1') break;
+                        if (subItem.tagName != 'H2') continue;
+
+                        id = $(subItem).attr('id');
+                        text = $(subItem).text();
+                        $('<li><a href="#' + id + '">' + text + '</a></li>').appendTo(ul);
+                    }
                 })
             }
 
-            getTableOfContent('h1');
+            getTableOfContent();
+            $('.guides li:first').addClass('active');
         })
     </script>
 
     <title>TypeFramework | MVC Framework for TypeScript</title>
 </head>
 
-<body>
+<body data-spy="scroll" data-target=".documentation">
 <header>
     <div class="inner">
         <h1><a href="/">TypeFramework</a></h1>
@@ -61,7 +80,7 @@
         </section>
 
         <aside id="sidebar">
-            <div data-spy="affix" data-offset-top="250">
+            <div class="documentation" data-spy="affix" data-offset-top="250">
             {% if page.title == "documentation" %}
                 <div class="dropdown">
                     <button class="btn btn-lg btn-default btn-block" data-toggle="dropdown">Reference: {{ page.version }} <i class="fa fa-caret-down"></i></button>
@@ -72,11 +91,9 @@
                 </div>
                 <br><br>
                 <h2>Developer Guide</h2>
-                <ul class="guides"></ul>
+                <ul id="guides" class="nav guides" role="tablist"></ul>
                 <br><br>
             {% endif %}
-
-            <p class="repo-owner"><a href="https://github.com/zekelevu/typeframework">TypeFramework</a> is maintained <br>by <a href="https://github.com/zekelevu">Zeke Kievel</a>.</p>
             </div>
         </aside>
     </div>
