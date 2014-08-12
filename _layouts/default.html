@@ -23,8 +23,6 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="/javascripts/highlight.pack.js"></script>
     <script type="text/javascript">
-        hljs.initHighlightingOnLoad();
-
         $(function() {
             function getTableOfContent() {
                 var $items = $('#main-content > h1');
@@ -55,6 +53,8 @@
 
             getTableOfContent();
             $('.guides li:first').addClass('active');
+
+            hljs.initHighlightingOnLoad();
         })
     </script>
 
