@@ -54,7 +54,10 @@
             getTableOfContent();
             $('.guides li:first').addClass('active');
 
-            hljs.initHighlightingOnLoad();
+            hljs.configure({
+                languages: ['bash', 'html', 'json', 'javascript', 'typescript']
+            });
+            hljs.initHighlighting();
         })
     </script>
 
