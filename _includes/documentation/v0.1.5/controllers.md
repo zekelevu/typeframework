@@ -24,7 +24,7 @@ You can also pass parameters into action and TypeFramework will automatically co
 If your visit the action with `/hello?name=John` for example, the action will render 'Hello John'. The parameter doesn't have to be
 a query string, it could be any of these in this order:
 
-- Routing parameters (see [Routing](routing.html) for learn more about routing parameters)
+- Routing parameters (see [Routing](#routing) for learn more about routing parameters)
 - Request body
 - Query string
 
