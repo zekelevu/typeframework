@@ -18,8 +18,10 @@ The following code would retrieve the value of the default adapter module name s
 
 - `env` (string): returns Node.js environment variable which defaults to `development`.
 - `port` (number): the port number your app will be listening on, defaults to `3000`.
-- `paths.views` (string): the path to the views folder, defaults to `app.views`.
-- `paths.public` (string): the path to the public folder, defaults to `public`.
+- `assetPath` (string): the path to the public folder, defaults to `public`.
+- `view.path` (string): the path to the views folder, defaults to `app/views`.
+- `view.engine` (string): the view engine, defaults to `ejs`.
+- `view.layout` (string, boolean): the default layout to be used for templates, defaults to `false`.
 - `logging.format` (string): whether app should log all request to console. Available options:
     - `default`: standard output.
     - `short`: shorter than default, also including response time.

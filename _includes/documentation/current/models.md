@@ -12,22 +12,17 @@ The following User model defines 3 attributes `name`, `email` and  `age`:
         age: number;
     }
 
-    app.addModel(User);
-
-You can also specify model attributes in constructor:
-
-    class User extends TF.Model {
-        constructor(public name: string, public email: string, public age?: number) {
-            super()
-        }
-    }
-
-    app.addModel(User);
-
-By default all attributes are required unless it has the `?` in the end to mark that it optional.
 Model attributes can also be validated like so:
 
-    User.validate('age', { required: false, min: 18 });
+    class User extends TF.Model {
+        name: string;
+        email: string;
+        age: number;
+
+        static configure() {
+            this.validate('age', { required: false, min: 18 });
+        }
+    }
 
 Available validations:
 

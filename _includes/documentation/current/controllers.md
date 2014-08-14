@@ -4,29 +4,62 @@ Controllers are defined in the `/app/controllers/` folder. Creating a new contro
 named `index` that returns 'Hello world':
 
     class HomeController extends TF.Controller {
-
         index() {
-            this.response.send('Hello world!');
+            this.content('Hello world!');
         }
-
     }
 
-    app.addController(HomeController);
-
-## Parameters
+## Action Parameters
 
 You can also pass parameters into action and TypeFramework will automatically convert data into correct type for you:
 
-    hello(name: string) {
-        this.response.send('Hello: ' + name);
+    class HomeController extends TF.Controller {
+        hello(name: string) {
+            this.content('Hello: ' + name);
+        }
     }
 
 If your visit the action with `/hello?name=John` for example, the action will render 'Hello John'. The parameter doesn't have to be
 a query string, it could be any of these in this order:
 
-- Routing parameters (see [Routing](routing.html) for learn more about routing parameters)
+- Routing parameters (see [Routing](#routing) for learn more about routing parameters)
 - Request body
 - Query string
+
+## Reply Interface
+
+Every controller in TypeFramework inherits the Reply interface which is implemented in the base controller. This interface is
+mainly used for sending data back to user.
+
+### Send a text response
+
+    this.content(text: string);
+    this.content(text: string, contentType: string);
+
+### Send a JSON response
+
+    this.json(data: {});
+
+### Render a view
+
+    this.view(template: string);
+    this.view(template: string, options: {});
+
+### Send a response from file
+
+    this.file(path: string);
+
+### Download a file
+
+    this.download(path: string);
+    this.download(path: string, filename: string);
+
+### Redirect to a url
+
+Redirect to the given url with optional status code defaulting to 302 "Found":
+
+    this.redirect(url: string);
+    this.redirect(url: string, status: number);
 
 ## Request Object
 
@@ -41,80 +74,95 @@ You can use the request object to query information about the user request.
 
 The TypeFramework request object extends Express Request object. You can check out the [Express guide](http://expressjs.com/4x/api.html) for more information.
 
-## Resonse Object
+## Response Object
 
 Each controller that inherits the TF.Controller will have access to the Response object via `this.response`.
 You can use the response object to send data back to user.
 
-### response.render
+### Get or set response status:
 
-- this.response.render(view, callback)
-- this.response.render(view, data, callback)
+    this.response.setStatus(404);
+    this.response.getStatus();
 
-Render a view using ejs template engine:
+### Get or set response header:
 
-    this.response.render('index', { user: name });
+    this.response.setHeader('Content-Type', 'text/plain');
+    this.response.getHeader('Content-Type');
 
-### response.json
+### Set or remove a cookie
 
-- this.response.json(body)
-- this.response.json(status, body)
+    this.response.setCookie('name', 'john', { domain: '.example.com', path: '/admin', secure: true });
+    this.response.removeCookie('name');
+    this.response.removeCookie('name', '/admin');
 
-Send a JSON response:
+### Set response content type:
 
-    this.response.json({ user: name });
-    this.response.json(500, { error: message });
+    this.response.setContentType('text/plain');
 
-### response.send
+### Set response Link header field
 
-- this.response.send(body)
-- this.response.send(status, body)
+Join the given links to populate the "Link" response header field:
 
-From the [Express guide](http://expressjs.com/4x/api.html). This method is useful for sending any non-streaming responses.
-The following usages are all valid:
+    this.response.setLinks({
+        next: 'http://api.example.com/users?page=2',
+        last: 'http://api.example.com/users?page=5'
+    });
 
-this.response.send({ some: 'json' });
-this.response.send('some html');
-this.response.send(404, 'Sorry, we cannot find that!');
-this.response.send(500, { error: 'something blew up' });
-this.response.send(200);
+### Get or set local data
 
-### response.redirect
+Response local data are scoped to the request and will be exposed to the views:
 
-- this.response.redirect(url)
-- this.response.redirect(status, url)
-
-From the [Express guide](http://expressjs.com/4x/api.html).
-Redirect to the given url with optional status code defaulting to 302 "Found":
-
-    this.response.redirect('/foo/bar');
-    this.response.redirect('http://example.com');
-    this.response.redirect(301, 'http://example.com');
-    this.response.redirect('../login');
-
-
-The TypeFramework response object extends Express Response object.
-You can check out the [Express guide](http://expressjs.com/4x/api.html) for more information.
+    this.response.setLocal('name': 'John');
 
 ## Action Filters
 
-Action filters are method that run before a controller action
+Action filters are method that run before, after or around a controller action.
 
 Filters may halt the request cycle. A common filter is one which requires that a user is logged in for an action to be run.
-You can define the filter method this way:
+You can add a filter to a controller this way by passing a function that accepts TF.ActionFilterContext as a parameter:
 
-    UserController.beforeAction((context: TF.ActionFilterContext) => {
-        var isAuthenticated = ...;
-        if (!isAuthenticated)
-            context.response.redirect('/login');
-        else
+    class UserController extends TF.Controller {
+        static configure() {
+            this.addBeforeFilter(this.authenticate);
+        }
+
+        static authenticate(context: TF.ActionFilterContext) {
+            var isAuthenticated = ...;
+            if (!isAuthenticated)
+                context.reply.redirect('/login');
+            else
+                context.next();
+        }
+    }
+
+Alternatively you can also create a class that extends TF.ActionFilter. The advantage of doing this is that you can have both
+`before` and `after` filters in the same class which will create a `around` filter:
+
+    class SpeedLogger extends TF.ActionFilter {
+        private start: number;
+
+        before(context: TF.IActionFilterContext) {
+            this.start = new Date().getTime();
             context.next();
-    });
+        }
+
+        after(context: TF.IActionFilterContext) {
+            var elapse = new Date().getTime() - this.start;
+            ...
+            context.next();
+        }
+    }
+
+    class UserController extends TF.Controller {
+        static configure() {
+            this.addFilter(SpeedLogger);
+        }
+    }
 
 Action filters by default will be applied to all actions, but your can also exclude some actions:
 
-    UserController.beforeAction(...).excludes('login');
+    this.addFilter(...).except('login');
 
 You can also choose to apply filter to a certain actions and exclude the rest:
 
-    UserController.beforeAction(...).includes('index', 'login');
+    this.addFilter(...).only('index', 'login');
