@@ -9,3 +9,7 @@ class User extends TF.Model {
         this.validate('age', { required: false, min: 10 });
     }
 }
+
+class User2 extends TF.Model {
+    test: string
+}

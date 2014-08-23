@@ -58,14 +58,14 @@ module TF {
     }
 
     export class Model {
-        public id: number;
-        public createdAt: Date;
-        public updatedAt: Date;
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
 
-        public static collectionName: string;
-        public static schema = true;
-        public static adapter = 'default';
-        public static attributes = {};
+        static collectionName: string;
+        static schema = true;
+        static adapter = 'default';
+        static attributes = null; // has to be null, cannot init with empty object
 
         private static collection: WL.Collection;
 
@@ -122,12 +122,13 @@ module TF {
         static validate(attr: string, options: ModelValidation);
         static validate(attrs: string[], definition: ModelValidation);
         static validate(obj: any, definition: ModelValidation) {
+            this.attributes = this.attributes || {};
             if (typeof obj == 'string') {
                 this.attributes[obj] = definition;
             }
             else if (obj instanceof Array) {
                 obj.forEach((attr) => {
-                    Model.validate(attr, definition);
+                    this.validate(attr, definition);
                 })
             }
         }

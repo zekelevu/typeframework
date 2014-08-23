@@ -1,9 +1,12 @@
 var fs = require('fs');
 var should = require('should');
 var request = require('request');
+var _ = require('lodash');
 
 describe('Test App', function() {
+    var app = null;
     var root = 'http://localhost:3000';
+
     var testBody = function(url, expectedBody, status) {
         status = !!status ? status : 200;
         it('should return "' + expectedBody + '" for ' + url, function(done) {
@@ -55,7 +58,7 @@ describe('Test App', function() {
     before(function(done) {
         var databasePath = __dirname + '/.build/database.json';
         fs.existsSync(databasePath) && fs.unlinkSync(databasePath);
-        require('./.build/app.js');
+        app = require('./.build/app.js');
         done();
     });
 
@@ -106,6 +109,15 @@ describe('Test App', function() {
     });
 
     describe('UserController', function() {
+        it('should not allow models to share waterline collection attributes', function(done) {
+            var User = _.find(app.models, function(model) { return model.name == 'User' }).type;
+            var User2 = _.find(app.models, function(model) { return model.name == 'User2' }).type;
+            _.toArray(User.attributes).length.should.equal(3);
+            User.attributes.should.have.keys('name', 'email', 'age');
+            should.not.exist(User2.attributes);
+            done();
+        });
+
         it('should return empty array when retrieving all users', function(done) {
             request({ url: root + '/user/', json: true }, function (error, response, body) {
                 should.not.exist(error);
